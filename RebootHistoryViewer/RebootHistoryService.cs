@@ -11,7 +11,7 @@ namespace RebootHistoryViewer
         private const string MachineName = ".";
 
         // Events related to reboot:
-        private static readonly HashSet<long> RebootEventIds = new() { 577, 20, 27 };
+        private static readonly HashSet<long> RebootEventIds = new() { 109, 20, 27 };
 
         public List<RebootInfo> QueryHistory(DateTime dateTimeAfter)
         {
@@ -37,7 +37,7 @@ namespace RebootHistoryViewer
             {
                 switch (entry.InstanceId)
                 {
-                    case 577:
+                    case 109:
                         shutdownEvent = entry;
                         goodEvent = null;
                         bootEvent = null;
@@ -66,6 +66,9 @@ namespace RebootHistoryViewer
                                 ShutdownEvent = shutdownEvent,
                                 GoodEvent = goodEvent,
                                 BootEvent = bootEvent,
+
+                                HistoryType = shutdownEvent.ReplacementStrings[0] == "5"
+                                ? HistoryType.Reboot : HistoryType.Shutdown,
                                 ShutdownAt = shutdownEvent.TimeWritten,
                                 ShutdownEventRecordId = shutdownEvent.Index,
                                 BootAt = bootEvent.TimeWritten,

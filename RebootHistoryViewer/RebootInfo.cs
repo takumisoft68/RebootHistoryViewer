@@ -6,12 +6,19 @@ using System.Threading.Tasks;
 
 namespace RebootHistoryViewer
 {
+    internal enum HistoryType
+    {
+        Shutdown,
+        Reboot,
+    }
+
     internal class RebootInfo
     {
         public required DateTime ShutdownAt { get; init; }
         public required DateTime BootAt { get; init; }
         public required long ShutdownEventRecordId { get; init; }
         public required long BootEventRecordId { get; init; }
+        public required HistoryType HistoryType { get; init; }
 
         public required System.Diagnostics.EventLogEntry ShutdownEvent { get; init; }
         public required System.Diagnostics.EventLogEntry BootEvent { get; init; }

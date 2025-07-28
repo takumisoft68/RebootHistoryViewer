@@ -31,11 +31,26 @@ namespace RebootHistoryViewer
             var logBuilder = new StringBuilder();
             history.ForEach(v =>
             {
-                logBuilder.AppendFormat(
-                    "{0} ({1}){2}",
-                    v.ShutdownAt.ToString(),
-                    v.ShutdownEventRecordId,
-                    Environment.NewLine);
+                if(v.HistoryType == HistoryType.Reboot)
+                {
+                    logBuilder.AppendFormat(
+                        "{0} ({1}) -> {2} ({3}) ... (reboot){4}",
+                        v.ShutdownAt.ToString(),
+                        v.ShutdownEventRecordId,
+                        v.BootAt.ToString(),
+                        v.BootEventRecordId,
+                        Environment.NewLine);
+                }
+                else if(v.HistoryType == HistoryType.Shutdown)
+                {
+                    logBuilder.AppendFormat(
+                        "{0} ({1}) -> {2} ({3}){4}",
+                        v.ShutdownAt.ToString(),
+                        v.ShutdownEventRecordId,
+                        v.BootAt.ToString(),
+                        v.BootEventRecordId,
+                        Environment.NewLine);
+                }
             });
 
 
